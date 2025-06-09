@@ -2,9 +2,6 @@ import cv2
 import numpy as np
 import time
 import threading
-import platform
-import subprocess
-import ctypes
 from pathlib import Path
 
 
@@ -29,14 +26,14 @@ class AnimationPlayer:
         self.BLACKFRAME = None
         self.FRAME_SHAPE = None
 
+        print("Start Loading Animations")
         self.load_animations()
+        print("Animations loaded")
+
         self.get_frame_shape()
         self.get_black_frame()
-
-        # Create and configure window
-        #cv2.namedWindow(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN)
-        #cv2.setWindowProperty(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
+        
+        print("Start Animation")
         self.anim_thread = threading.Thread(target=self.animation_loop)
         self.anim_thread.start()
 
@@ -115,11 +112,3 @@ class AnimationPlayer:
         self.stop_thread = True
         self.anim_thread.join()
         cv2.destroyAllWindows()
-
-
-# Example usage
-if __name__ == "__main__":
-    player = AnimationPlayer(animation_delay=500, playback_speed=1)
-    player.animation_test()
-    player.stop()
-    
