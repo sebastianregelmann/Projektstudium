@@ -51,6 +51,7 @@ class AnimationPlayer:
                     frames.append(frame)
                 cap.release()
                 color_animations[color] = frames
+                print("Loaded" + str(color) + str(folder_name))
             self.ANIMATIONS[folder_name] = color_animations
 
     def get_frame_shape(self):
