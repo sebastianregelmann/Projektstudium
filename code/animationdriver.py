@@ -31,11 +31,6 @@ class AnimationPlayer:
         self.SCREEN_HEIGHT = 1080
         self.SCREEN_RES = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
         #borderless fullscreen
-        # <<< FULLSCREEN FIX START >>>
-        time.sleep(1)  # <<< ADDED: Let display initialize
-        cv2.namedWindow(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN)  # <<< CHANGED: Moved after delay
-        cv2.setWindowProperty(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # <<< CHANGED
-        # <<< FULLSCREEN FIX END >>>
         
         print("Start Loading Animations")
         self.load_animations()
@@ -44,6 +39,16 @@ class AnimationPlayer:
         self.get_frame_shape()
         self.get_black_frame()
         
+        # <<< FULLSCREEN FIX START >>>
+        #time.sleep(1)  # <<< ADDED: Let display initialize
+        #cv2.namedWindow(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN)  # <<< CHANGED: Moved after delay
+        #cv2.setWindowProperty(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # <<< CHANGED
+        #time.sleep(1)
+        #black_scaled = cv2.resize(self.BLACKFRAME, self.SCREEN_RES, interpolation=cv2.INTER_LINEAR)
+        #cv2.imshow(self.WINDOWNAME, black_scaled)
+        #time.sleep(1)
+        # <<< FULLSCREEN FIX END >>>
+
         print("Start Animation")
         self.anim_thread = threading.Thread(target=self.animation_loop)
         self.anim_thread.start()
