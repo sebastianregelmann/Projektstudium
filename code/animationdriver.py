@@ -25,7 +25,18 @@ class AnimationPlayer:
 
         self.BLACKFRAME = None
         self.FRAME_SHAPE = None
-
+        
+        #scale properties
+        self.SCREEN_WIDTH = 1920
+        self.SCREEN_HEIGHT = 1080
+        self.SCREEN_RES = (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
+        #borderless fullscreen
+        # <<< FULLSCREEN FIX START >>>
+        time.sleep(1)  # <<< ADDED: Let display initialize
+        cv2.namedWindow(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN)  # <<< CHANGED: Moved after delay
+        cv2.setWindowProperty(self.WINDOWNAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # <<< CHANGED
+        # <<< FULLSCREEN FIX END >>>
+        
         print("Start Loading Animations")
         self.load_animations()
         print("Animations loaded")
@@ -62,7 +73,8 @@ class AnimationPlayer:
         self.BLACKFRAME = np.zeros(self.FRAME_SHAPE, dtype=np.uint8)
 
     def wait_animation(self):
-        cv2.imshow(self.WINDOWNAME, self.BLACKFRAME)
+        black_scaled = cv2.resize(self.BLACKFRAME, self.SCREEN_RES, interpolation=cv2.INTER_LINEAR)
+        cv2.imshow(self.WINDOWNAME, black_scaled)
         cv2.waitKey(self.ANIMATION_DELAY)
 
     def animation_loop(self):
@@ -83,7 +95,9 @@ class AnimationPlayer:
                 self.wait_animation()
 
             start_time = time.time()
-            cv2.imshow(self.WINDOWNAME, current_animation[frame_index])
+            frame = current_animation[frame_index]
+            frame_scaled = cv2.resize(frame, self.SCREEN_RES, interpolation=cv2.INTER_LINEAR)
+            cv2.imshow(self.WINDOWNAME, frame_scaled)
             end_time = time.time()
             delay_ms = max(1, int(self.FRAMETIME / self.PLAYBACKSPEED - (end_time - start_time) * 1000))
 
