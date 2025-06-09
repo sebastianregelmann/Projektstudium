@@ -10,7 +10,7 @@ class AnimationPlayer:
         self.current_dir = Path(__file__).resolve().parent
         self.FOLDERNAMES = ["Medium_Left", "Medium_Right", "Sharp_Left", "Sharp_Right", "Straight"]
         self.COLORS = ["Blue", "Green", "Red", "Turquise"]
-        self.PATH = self.current_dir.parent / "animations"
+        self.PATH = self.current_dir.parent / "animations"/"quater_resolution"
         self.FOLDERPATHS = [self.PATH / folder_name for folder_name in self.FOLDERNAMES]
         self.FRAMETIME = 41.6666
         self.WINDOWNAME = "Animation"
